@@ -2,21 +2,15 @@
 # Docker Image      movoin/devops-java
 #
 # MAINTAINER        Allen Luo <movoin@gmail.com>
-# DOCKER-VERSION    1.12.3
+# DOCKER-VERSION    18.09.0
 #
 
-FROM        movoin/devops-centos
-MAINTAINER  Allen Luo <movoin@gmail.com>
+FROM movoin/devops-centos
 
-ENV JAVA_HOME /usr/local/java/jdk1.8.0_181
+ENV JAVA_HOME /usr/local/java/jdk1.8.0_191
 
-COPY conf/ /opt/docker/
+COPY conf/ $DOCKER_CONF_PATH
 
 RUN set -x \
-    # Install
-    && /opt/docker/bin/install.sh \
     # Bootstrap
-    && /opt/docker/bin/bootstrap.sh \
-    # Clean
-    && yum clean all \
-    && rm -rf /var/cache/yum
+    && $DOCKER_CONF_PATH/bin/bootstrap.sh
